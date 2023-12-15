@@ -28,6 +28,9 @@ docker_swarm_addr: "{{ hostvars[inventory_hostname]['ansible_' + docker_swarm_in
 # Define Docker swarm listen port
 docker_swarm_port: "2377"
 
+# Define Docker swarm data path port
+docker_swarm_data_path_port: ''
+
 
 # Define Ansible group which contains your Docker swarm managers
 docker_swarm_managers_ansible_group: 'docker-swarm-managers'
