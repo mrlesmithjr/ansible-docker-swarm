@@ -1,22 +1,33 @@
 ---
 # defaults file for ansible-docker-swarm
+
+# Define Docker interface to auto fill `docker_swarm_addr`
+docker_swarm_interface: "enp0s8"
+
+# Define Docker swarm listen and advertise address
 docker_swarm_addr: "{{ hostvars[inventory_hostname]['ansible_' + docker_swarm_interface]['ipv4']['address'] }}"
 
-# Validity period for node certificates (default 2160h0m0s)
-docker_swarm_cert_expiry: '2160h0m0s'
+# Define Docker swarm listen port
+docker_swarm_port: "2377"
 
-# Dispatcher heartbeat period (default 5s)
-docker_swarm_dispatcher_heartbeat_duration: '5s'
+# Define Docker swarm data path port
+docker_swarm_data_path_port: ''
 
-docker_swarm_interface: "enp0s8"
-# docker_swarm_managers_ansible_group: 'docker-swarm-managers'
-
-docker_swarm_config_networks: false
-docker_swarm_config_settings: false
 
 # Define Ansible group which contains your Docker swarm managers
 docker_swarm_managers_ansible_group: 'docker-swarm-managers'
 
+# Define Ansible group which contains you Docker swarm workers
+docker_swarm_workers_ansible_group: 'docker-swarm-workers'
+
+# Defines first node in docker_swarm_managers_ansible_group as primary
+docker_swarm_primary_manager: '{{ groups[docker_swarm_managers_ansible_group][0] }}'
+
+
+# Define Docker swarm network customizations
+docker_swarm_config_networks: false
+
+# Network: see community.docker.docker_network
 docker_swarm_networks: []
   # - name: 'my_net'
   #   driver: 'overlay'
@@ -24,13 +35,16 @@ docker_swarm_networks: []
   # - name: 'test'
   #   driver: 'overlay'
   #   state: 'absent'
-docker_swarm_port: "2377"
 
-# Defines first node in docker_swarm_managers_ansible_group as primary
-docker_swarm_primary_manager: '{{ groups[docker_swarm_managers_ansible_group][0] }}'
 
-# Task history retention limit (default 5)
+# Define Docker swarm setting customizations
+docker_swarm_config_settings: false
+
+# Setting: Validity period for node certificates (default 2160h0m0s)
+docker_swarm_cert_expiry: '2160h0m0s'
+
+# Setting: Dispatcher heartbeat period (default 5s)
+docker_swarm_dispatcher_heartbeat_duration: '5s'
+
+# Setting: Task history retention limit (default 5)
 docker_swarm_task_history_limit: '5'
-
-# Define Ansible group which contains you Docker swarm workers
-docker_swarm_workers_ansible_group: 'docker-swarm-workers'

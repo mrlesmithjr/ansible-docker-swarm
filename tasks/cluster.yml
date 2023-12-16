@@ -11,6 +11,7 @@
           docker swarm init
           --listen-addr {{ docker_swarm_addr }}:{{ docker_swarm_port }}
           --advertise-addr {{ docker_swarm_addr }}
+          {{ (docker_swarm_data_path_port == '') | ternary('', '--data-path-port=' + docker_swarm_data_path_port) }}
   become: true
   when: >
         'Swarm: inactive' in docker_info.stdout and
