@@ -1,7 +1,7 @@
 ---
 - name: debian | Installing Pre-Reqs
-  apt:
-    name: "python-pip"
+  ansible.builtin.apt:
+    name: "python3-pip"
     state: "present"
   become: true
   when: ansible_os_family == "Debian"
